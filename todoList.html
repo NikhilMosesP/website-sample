@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title> JScript </title>
+  </head>
+
+
+  <body>
+    <button id="display-todos-button" >Display a ToDoList </button>
+    <button id="toggleall-todos-button"> ToggleAll </button>
+    <button id="add-todos-button"> Add </button>
+    <input id="add-input">
+    <button id="edit-todos-button"> Edit </button>
+    <input id="edit-add-input">
+    <input id="edit-position-input">
+    
+    <!-- <button id="remove-todos-button"> Remove </button>
+    <input id="remove-position-input"> -->
+    <!-- <button id="toggle-todos-button"> Toggle </button>
+    <input id="toggle-position-input"> -->
+    
+    <ul id="todo-list-display"></ul>
+    
+
+    
+    <script>
+     /** var todos = ['Item1','Item2','Item3'];
+
+      todos.push('Item4');
+
+      todos[0] = 'Item1 updated';
+
+      todos.splice(0,3);**/
+      
+      
+      var todos = [{todoText:'Item 1' , completed: false},
+                   {todoText:'Item 2' , completed: false},
+                   {todoText:'Item 3' , completed: false}];
+
+         
+
+                   displayTodos();
+
+      function add(todoText){
+         var todoText = addInput.value;
+        todos.push({todoText, completed: false });
+        addInput.value = '';
+        displayTodos();
+      }
+
+      function edit() {
+        // var position = editAddPosition.value;
+         var newTodoText = window.prompt();
+         var iD = event.currentTarget.id;
+         var position = iD.replace(/\D/g, "");
+         if(newTodoText === null || newTodoText ===''){
+          //mothing
+
+         } else {
+          todos[position].todoText = newTodoText;
+         }
+        
+         
+
+
+         
+
+         
+        
+      //  todos[position] ={todoText, completed:false};
+        
+       // editAddPosition.value = '';
+       // editAddInput.value = '';
+        //addPosition.value = '';
+        displayTodos();
+      }
+
+      function remove(event){
+        var iD = event.currentTarget.id;
+        var position = iD.replace(/\D/g, "");
+        
+          todos.splice(position, 1);
+        displayTodos();
+      }
+
+      function scratch(){
+        var text = '--careful--is--fast--';
+        newText = text.split('-');
+        console.log(newText);
+        
+      }
+
+      function toggle(event) {
+         //var position = toggleAddPosition.value;
+         
+         var iD = event.currentTarget.id;
+         var position = iD.replace(/\D/g, "") ;
+         
+         
+         
+
+        if (todos[position].completed === false) {
+          todos[position].completed = true;
+          
+        } else{
+          todos[position].completed = false;
+        }
+        //toggleAddPosition.value = '';
+        
+        displayTodos();
+      }
+
+      function displayTodos(){
+        var displayTodoList = document.getElementById('todo-list-display');
+        displayTodoList.innerHTML = '';
+        
+        for (var i=0; i<todos.length; i++){
+          
+          var todoli = document.createElement('li');
+          
+          
+          
+          
+  
+
+          if(todos[i].completed === true){
+            todoli.innerText = '[X] ' + todos[i].todoText;
+          } else{
+            todoli.innerText = '[ ] ' + todos[i].todoText;      
+          }
+          var removeButton = document.createElement('button');
+
+          var toggleButton = document.createElement('button');
+
+          var editButton = document.createElement('button');
+          
+          removeButton.innerText = 'Remove';
+          toggleButton.innerText = 'Toggle';
+          editButton.innerText = 'Edit';
+        
+
+          removeButton.addEventListener('click', remove);
+          toggleButton.addEventListener('click', toggle);
+          editButton.addEventListener('click', edit);
+          removeButton.id =  'remove-' + i;
+          toggleButton.id = 'toggle-' + i ;
+          editButton.id = 'edit-' + i;
+
+          
+
+
+          todoli.appendChild(removeButton);
+
+          todoli.appendChild(toggleButton);
+
+          todoli.appendChild(editButton);
+
+          
+          
+          displayTodoList.appendChild(todoli);
+        }
+         
+        }
+        
+         
+
+      
+
+
+      function toggleAll(){
+        var trueCount = 0;
+        var falseCount = 0;
+        for (var i = 0; i<todos.length; i++){
+          if(todos[i].completed === true){
+            todos[i].completed = false;
+            trueCount++;
+          }else {
+            todos[i].completed = true;
+            falseCount++
+          } 
+         } 
+         if(trueCount !== todos.length && falseCount !== todos.length) {
+          for(var j =0; j<todos.length; j++) {
+            todos[j].completed = true;
+          }
+        }
+        displayTodos();
+      }
+
+      function toggleAll1(){
+            var completedToDos = 0;
+
+            for (var i = 0; i<todos.length; i++){
+              if(todos[i].completed === true){
+                completedToDos++;
+              }
+            }
+
+            if(completedToDos === todos.length){
+              for( i= 0; i<todos.length; i++) {
+                todos[i].completed = false;
+              }
+            } else {
+              for(i =0; i<todos.length; i++){
+                todos[i].completed = true;
+              }
+            }
+            displayTodos();
+          }
+
+
+          
+
+          var displayToDoButton = document.getElementById('display-todos-button');
+          var toggleAllToDoButton = document.getElementById('toggleall-todos-button');
+          var addToDoButton = document.getElementById('add-todos-button');
+          var editToDoButton = document.getElementById('edit-todos-button');
+          var editAddToDoButton = document.getElementById('edit-add-input');
+          // var removeToDoButton = document.getElementById('remove-todos-button'); 
+        //  var toggleToDoButton = document.getElementById('toggle-todos-button');
+          var addInput = document.getElementById('add-input');
+          var editAddInput = document.getElementById('edit-add-input');
+          var addPosition = document.getElementById('edit-position-input');
+         // var removeAddPosition = document.getElementById('remove-position-input');
+        //  var toggleAddPosition = document.getElementById('toggle-position-input');
+          
+          
+
+
+          displayToDoButton.addEventListener('click', displayTodos);
+          toggleAllToDoButton.addEventListener('click', toggleAll);
+          addToDoButton.addEventListener('click', add);
+          editToDoButton.addEventListener('click', edit);
+         // removeToDoButton.addEventListener('click', remove);
+         // toggleToDoButton.addEventListener('click', toggle);
+          
+
+          
+      
+    </script>
+  </body>
+    
+
+</html>
+
+
+
+  
+
